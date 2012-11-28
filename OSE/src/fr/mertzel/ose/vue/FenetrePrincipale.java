@@ -3,12 +3,14 @@ package fr.mertzel.ose.vue;
 
 import java.awt.* ;
 import javax.swing.* ;
+
+import fr.mertzel.ose.controleur.Observateur;
 import fr.mertzel.ose.modele.Orientation;
 import fr.mertzel.ose.modele.Parametres;
 import fr.mertzel.ose.modele.PlanSalle;
 import fr.mertzel.ose.modele.Position;
 
-public class FenetrePrincipale extends JFrame {
+public class FenetrePrincipale extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -153,11 +155,11 @@ public class FenetrePrincipale extends JFrame {
 	public Plan getPlanSalle(){
 		return this.lePlan ;
 	}
-	
-	public void visualiserPlan(){
-		this.lePlan.repaint() ;
-	}
-	
+	/**Methode remplacer par actualiser()
+	*public void visualiserPlan(){
+	*	this.lePlan.repaint() ;
+	*}
+	*/
 	public void afficherMenuContextuel(int x,int y){
 		Position position = new Position(y/Parametres.HAUTEUR_RANGEE,x/Parametres.LARGEUR_TRAVEE) ;
 		if(this.modele.positionOccupee(position)){
@@ -174,7 +176,7 @@ public class FenetrePrincipale extends JFrame {
 	}
 	
 	//Composition
-	public class Plan extends JPanel {
+	public class Plan extends JPanel implements Observateur {
 
 		private static final long serialVersionUID = 1L;
 		
@@ -184,6 +186,8 @@ public class FenetrePrincipale extends JFrame {
 			super() ;
 			this.modele = modele ;
 			this.setBackground(Color.white) ;
+			modele.ajouter(this);
+			this.actualiser();
 		}
 			
 		public void paintComponent(Graphics g){
@@ -245,6 +249,9 @@ public class FenetrePrincipale extends JFrame {
 					g.drawLine(centreX,centreY,visibleX,visibleY) ;
 				}
 			}
+		}
+		public void actualiser(){
+			this.repaint() ;
 		}
 		
 	}

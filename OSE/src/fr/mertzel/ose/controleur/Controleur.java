@@ -77,7 +77,7 @@ public class Controleur implements MouseListener, ActionListener {
 		else if(source == vue.getItemOrienterNord()){
 			modele.retirerPoste(this.position) ;
 		}
-		vue.visualiserPlan() ;
+		//vue.visualiserPlan() ;
 	}
 	
 	public void mouseClicked(MouseEvent evt){
